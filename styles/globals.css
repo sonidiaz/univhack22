@@ -1,3 +1,5 @@
+
+
 html,
 body {
   padding: 0;
@@ -14,3 +16,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.wrapper-box-message {
+  display: flex;
+  flex-wrap: wrap;
+}
+.message {
+  border: 1px solid rgb(56 56 56 / 13%);
+  padding: 20px;
+}
+
