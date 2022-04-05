@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Grid, Card, Col, Text, Row } from '@nextui-org/react';
 import ReactMarkdown from 'react-markdown'
 import { Button } from '@nextui-org/react';
-function Messages({ messages }) {
+function Messages({ messages }: any) {
   const host = 'http://localhost:3000/';
   const bgImage = [
     'bg-premios.jpg',
@@ -49,17 +49,18 @@ function Messages({ messages }) {
               </Col>
             </Card.Header>
             <Card.Image
-              src={host + bgImage[2]}
+              src={(host === 'http://localhost:3000/' ? 'http://localhost:3000/' : '/') + bgImage[2]}
               height={340}
               width='100%'
               alt='Card image background'
             />
-            <Card.Footer justify='flex-start'>
+            <Card.Footer>
               <Row wrap='wrap' justify='space-between' align='center'>
                 {/* <Text size={24} b>
                   <i className='bx bxs-heart'></i>
                 </Text> */}
-                <Button color="secondary"><a href={data.permalink} target="_blank">Ver Video</a></Button>
+                
+                <Button color="secondary"><a href={data.permalink} rel="noopener noreferrer" target="_blank">Ver Video</a></Button>
               </Row>
             </Card.Footer>
           </Card>

@@ -11,7 +11,7 @@ import styles from '../styles/Home.module.css';
 type Props = {}
 
 const Channel = (props: Props) => {
-  const params:{} = useRouter()
+  const params:any = useRouter()
   const SlConnect = new SlackConnect();
   const [listPublications, setlistPublications] = useState([]);
   useEffect(() => {

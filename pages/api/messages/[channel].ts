@@ -13,7 +13,7 @@ interface Count {
 const messagesList = async (req:NextApiRequest, resp: NextApiResponse) =>  {
   
   const {query} = req;
-  const dataReactions = await fetch(`https://slack.com/api/conversations.history?channel=${query.channel}`, {
+  const dataReactions = await fetch(`https://slack.com/api/conversations.history?channel=${query.channel}&limit=200`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -21,12 +21,13 @@ const messagesList = async (req:NextApiRequest, resp: NextApiResponse) =>  {
     }
   })
   const respuesta = await dataReactions.json()
-  const dataFromChannel = respuesta.messages.filter((data: listReaction) => {
-    if(data.client_msg_id  ){
+  console.log(respuesta)
+  const dataFromChannel: any = respuesta.messages.filter((data: listReaction) => {
+    if(data.client_msg_id && data.type === 'message'){
         return data
     }
   })
-  .map((dataFinal:{text: string, files: {files: []}, reactions: [], permalink: string, mp4_low: string}) => ({
+  .map((dataFinal:any) => ({
     "message": dataFinal.text,
     "files": dataFinal.files ? dataFinal.files[0].thumb_360 : [],
     "reactions": dataFinal.reactions ? dataFinal.reactions : [],
@@ -39,11 +40,16 @@ const messagesList = async (req:NextApiRequest, resp: NextApiResponse) =>  {
     reactions: [];
     count: number;
   }
-  dataFromChannel.forEach((element:responseSlack) => {
+  interface MainElement {
+    reactions:any,
+    count: any
+  }
+  dataFromChannel.forEach((element: any) => {
     if(element.reactions) {
       const temp = element.reactions.filter((icon: {name: string, count: number}) => {
         if(icon.name === 'vote') {
           element.count = icon.count;
+          // @ts-ignore: Unreachable code error
           realIcon.push(element);
         }
       })
@@ -51,7 +57,7 @@ const messagesList = async (req:NextApiRequest, resp: NextApiResponse) =>  {
     }
   });
   
-  realIcon.sort((a:Count, b:Count): number => {
+  realIcon.sort((a:Count, b:Count): any => {
     if(a.count > b.count) {
       return -1; 
     }
@@ -59,6 +65,7 @@ const messagesList = async (req:NextApiRequest, resp: NextApiResponse) =>  {
       return 1;
     } 
   });
+  console.log(realIcon)
   resp.status(200).json(realIcon)
 }
 
