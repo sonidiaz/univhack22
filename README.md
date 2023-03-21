@@ -1,7 +1,7 @@
 ## Dashboard Plataforma
 
-Pagina web que obtiene los resultados de unas votaciones realizadas en canales de Slack.
-Lista desde el más votado al menos votado.
+Pagina web que obtiene los resultados de votaciones realizadas en 3 canales de Slack.\
+Tiene un filtrado que muestra los proyectos desde el más votado al menos votado.
 
 Tecnologías: ReactJs, NextJs, TypeScript, Api Slack
 
